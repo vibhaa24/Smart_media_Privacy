@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processing History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 24px;
+            background: #f7f9fc;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 16px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+        th {
+            background: #f2f2f2;
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .top-links {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Processing History</h1>
+
+    <div class="top-links">
+        <a href="{{ url_for('home') }}">← Back to upload</a>
+    </div>
+
+    {% if records %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Original file</th>
+                    <th>Processed file</th>
+                    <th>Mode</th>
+                    <th>Blur level</th>
+                    <th>Emails</th>
+                    <th>Phones</th>
+                    <th>Cards</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in records %}
+                    <tr>
+                        <td>{{ r.created_at }}</td>
+                        <td>{{ r.original }}</td>
+                        <td>{{ r.processed }}</td>
+                        <td>{{ r.mode }}</td>
+                        <td>{{ r.blur_level }}</td>
+                        <td>{{ r.emails if r.emails is not none else '-' }}</td>
+                        <td>{{ r.phones if r.phones is not none else '-' }}</td>
+                        <td>{{ r.cards if r.cards is not none else '-' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No history yet. Process an image first.</p>
+    {% endif %}
+</body>
+</html>
